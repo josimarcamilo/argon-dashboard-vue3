@@ -24,15 +24,16 @@
                 <div class="card-body">
                   <form role="form">
                     <div class="mb-3">
-                      <argon-input type="email" placeholder="Email" name="email" size="lg" />
+                      <argon-input v-model="email" type="email" placeholder="Email" name="email" size="lg" />
                     </div>
                     <div class="mb-3">
-                      <argon-input type="password" placeholder="Password" name="password" size="lg" />
+                      <argon-input v-model="password" type="password" placeholder="Password" name="password" size="lg" />
                     </div>
                     <argon-switch id="rememberMe">Remember me</argon-switch>
 
                     <div class="text-center">
                       <argon-button
+                        @click.prevent="login"
                         class="mt-4"
                         variant="gradient"
                         color="success"
@@ -82,6 +83,8 @@ import Navbar from "@/examples/PageLayout/Navbar.vue";
 import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
+import { mapActions } from "vuex";
+import axios from 'axios';
 const body = document.getElementsByTagName("body")[0];
 
 export default {
@@ -91,6 +94,13 @@ export default {
     ArgonInput,
     ArgonSwitch,
     ArgonButton,
+  },
+  data(){
+    return {
+      email: "orfed@orfed.com.br",
+      password: "admin",
+      token: null
+    }
   },
   created() {
     this.$store.state.hideConfigButton = true;
@@ -106,5 +116,31 @@ export default {
     this.$store.state.showFooter = true;
     body.classList.add("bg-gray-100");
   },
+  methods: {
+    ...mapActions(["setTokenApi"]),
+
+    login(){
+      console.log(this.email, this.password);
+      this.$swal(this.email);
+      axios({
+        method: "post",
+        url: "http://localhost:8000/api/auth/login",
+        data: {
+          email: this.email,
+          password: this.password,
+        },
+      }).then( (response) => {
+        const token = response.data.data.access_token;
+        console.log('token-storage', this.$store.state.apiToken)
+        this.token = token;
+        this.setTokenApi(token);
+        console.log('token-storage-2', this.$store.state.apiToken)
+        this.$router.push({ name: 'Dashboard' });
+      }).catch((error) => {
+        console.error(error);
+        this.$swal('Erro ao realizar login');
+      });
+    }
+  }
 };
 </script>
