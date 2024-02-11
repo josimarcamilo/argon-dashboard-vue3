@@ -10,7 +10,8 @@
         :class="getClasses(size, valid)"
         :name="name"
         :id="id"
-        :value="value"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
         :placeholder="placeholder"
         :isRequired="isRequired"
       />
@@ -37,7 +38,7 @@ export default {
     iconDir: String,
     name: String,
     id: String,
-    value: String,
+    modelValue: null,
     placeholder: String,
     type: String,
     isRequired: Boolean,
