@@ -84,6 +84,7 @@ import ArgonInput from "@/components/ArgonInput.vue";
 import ArgonSwitch from "@/components/ArgonSwitch.vue";
 import ArgonButton from "@/components/ArgonButton.vue";
 import { mapActions } from "vuex";
+import { apiUrl } from '../helpers.js'
 import axios from 'axios';
 const body = document.getElementsByTagName("body")[0];
 
@@ -123,7 +124,7 @@ export default {
       this.$swal(this.email);
       axios({
         method: "post",
-        url: "http://localhost:8000/api/auth/login",
+        url: `${apiUrl()}/api/auth/login`,
         data: {
           email: this.email,
           password: this.password,
