@@ -12,12 +12,15 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard-default",
+    redirect: "/dashboard",
   },
   {
-    path: "/dashboard-default",
+    path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      requiresAuth: true // Add meta field to indicate protected route
+    }
   },
   {
     path: "/tables",
@@ -61,6 +64,20 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active",
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    var token = localStorage.getItem('api_token');
+    if (token) {
+      next();
+    } else {
+      next('/signin');
+    }
+  } else {
+    // Non-protected route, allow access
+    next();
+  }
 });
 
 export default router;

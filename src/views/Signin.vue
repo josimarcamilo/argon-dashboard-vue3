@@ -120,7 +120,6 @@ export default {
     ...mapActions(["setTokenApi"]),
 
     login(){
-      console.log(this.email, this.password);
       this.$swal(this.email);
       axios({
         method: "post",
@@ -131,10 +130,8 @@ export default {
         },
       }).then( (response) => {
         const token = response.data.data.access_token;
-        console.log('token-storage', this.$store.state.apiToken)
         this.token = token;
         this.setTokenApi(token);
-        console.log('token-storage-2', this.$store.state.apiToken)
         this.$router.push({ name: 'Dashboard' });
       }).catch((error) => {
         console.error(error);

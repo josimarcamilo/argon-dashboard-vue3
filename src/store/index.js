@@ -48,6 +48,7 @@ export default createStore({
     },
     apiToken(state, token) {
       state.apiToken = token;
+      window.localStorage.setItem('api_token', token);
     },
   },
   actions: {
