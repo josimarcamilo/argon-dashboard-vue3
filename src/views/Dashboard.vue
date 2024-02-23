@@ -3,6 +3,9 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="row">
+          <list-budget />
+        </div>
+        <div class="row">
           <div class="col-lg-3 col-md-6 col-12">
             <card
               :title="stats.money.title"
@@ -120,6 +123,7 @@ import Card from "@/examples/Cards/Card.vue";
 import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
 import Carousel from "./components/Carousel.vue";
 import CategoriesCard from "./components/CategoriesCard.vue";
+import ListBudget from "./components/ListBudget.vue";
 
 import US from "@/assets/img/icons/flags/US.png";
 import DE from "@/assets/img/icons/flags/DE.png";
@@ -127,7 +131,7 @@ import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
 export default {
-  name: "dashboard-default",
+  name: "dashboard",
   data() {
     return {
       stats: {
@@ -202,6 +206,7 @@ export default {
     GradientLineChart,
     Carousel,
     CategoriesCard,
+    ListBudget
   },
 };
 </script>
